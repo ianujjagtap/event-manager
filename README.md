@@ -1,31 +1,43 @@
-# ▲ / next-forge
+# Mini Event Manager
 
-**Production-grade Turborepo template for Next.js apps.**
+## How to Run
 
-<div>
-  <img src="https://img.shields.io/npm/dy/next-forge" alt="" />
-  <img src="https://img.shields.io/npm/v/next-forge" alt="" />
-  <img src="https://img.shields.io/github/license/vercel/next-forge" alt="" />
-</div>
+Step 1 : 
 
-## Overview
-
-[next-forge](https://github.com/vercel/next-forge) is a [Next.js](https://nextjs.org/) project boilerplate for modern web application. It is designed to be a comprehensive starting point for new apps, providing a solid, opinionated foundation with a minimal amount of configuration.
-
-## Getting Started
-
-Clone the repo using:
-
-```sh
-npx next-forge@latest init
+```bash 
+# Clone the repository
+git clone <repository-url>
+cd <event-manager>
+```
+Step 2 :
+```bash
+# Install dependencies at root level
+pnpm install
+```
+Step 3 : 
+```bash
+# Install dependencies for web app specifically  
+pnpm install --filter=web
 ```
 
-Then read the [docs](https://www.next-forge.com/docs) for more information.
+Step 4 : 
+``` bash
+# Start development server for web app only
+pnpm dev --filter=web
+```
 
-## Contributors
+## Path of the Page
 
-<a href="https://github.com/vercel/next-forge/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=vercel/next-forge" />
-</a>
+Navigate to `/events` page at `http://localhost:3000/events`
 
-Made with [contrib.rocks](https://contrib.rocks).
+## Features
+- Client-side only (no database or API routes)
+- Events persist in localStorage
+- Form validation with React Hook Form + Zod
+- Search functionality filters events by name
+- Dark theme with responsive design
+
+## Screenshot
+<img width="1255" height="877" alt="Screenshot 2025-08-20 232016" src="https://github.com/user-attachments/assets/1ddc1e08-6ccd-40a3-bc7a-69a794fd6add" />
+
+

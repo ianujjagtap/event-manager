@@ -6,8 +6,8 @@ Step 1 :
 
 ```bash 
 # Clone the repository
-git clone <repository-url>
-cd <event-manager>
+git clone https://github.com/ianujjagtap/event-manager.git
+cd event-manager
 ```
 Step 2 :
 ```bash

@@ -54,6 +54,8 @@ export default function EventsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [confirmationDialog, setConfirmationDialog] = useState<boolean>(false);
   const [deleteDialog, setDeleteDialog] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState("")
+
 
   const form = useForm<z.infer<typeof eventSchema>>({
     resolver: zodResolver(eventSchema),
@@ -129,6 +131,8 @@ export default function EventsPage() {
       description: `${eventToDelete.name} has been removed`,
     });
   };
+
+  const filteredEvents = events.filter((event) => event.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
    <div className="min-h-screen w-full bg-black">
@@ -258,29 +262,47 @@ export default function EventsPage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-secondary-foreground/50 border-secondary-foreground">
+                      <Card className="bg-secondary-foreground/50 border-secondary-foreground">
               <CardHeader>
                 <CardTitle className="text-lg font-medium text-white">Events ({events.length})</CardTitle>
               </CardHeader>
               <CardContent>
-                {events.length === 0 ? (
+                <div className="mb-4">
+                  <Input
+                    placeholder="Search events..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-black border-secondary-foreground text-white placeholder:text-secondary/50"
+                  />
+                </div>
+
+                {filteredEvents.length === 0 ? (
                   <div className="py-8 text-center">
-                    <p className="mb-2 text-secondary/50">No events yet</p>
-                    <p className="text-sm text-gray-500">Add your first event to get started!</p>
+                    {events.length === 0 ? (
+                      <>
+                        <p className="mb-2 text-secondary/50">No events yet</p>
+                        <p className="text-sm text-secondary/50">Add your first event to get started!</p>
+                      </>
+                    ) : (
+                      <>
+                        <p className="mb-2 text-secondary/50">No events found</p>
+                        <p className="text-sm text-secondary/50">Try a different search term.</p>
+                      </>
+                    )}
                   </div>
                 ) : (
                   <div className="max-h-96 space-y-3 overflow-y-auto">
-                    {events.map((event) => (
+                    {filteredEvents.map((event) => (
                       <div
                         key={event.id}
-                        className="flex items-center justify-between rounded-lg border border-secondary-foreground bg-black p-4 transition-colors hover:bg-secondary-foreground/80"
+                        className="flex items-center justify-between rounded-lg border border-secondary-foreground bg-black/50 p-4 transition-colors hover:bg-black/80"
                       >
                         <div className="flex-1">
                           <h3 className="mb-1 font-medium text-white">{event.name}</h3>
-                          <p className="text-sm text-secondary/50">{format(new Date(event.date), "PPP")}</p>
+                          <p className="text-sm text-gray-400">{format(new Date(event.date), "PPP")}</p>
                         </div>
 
-                        <Dialog
+                       <Dialog
                           open={deleteDialog === event.id}
                           onOpenChange={(open) => setDeleteDialog(open ? event.id : null)}
                         >
